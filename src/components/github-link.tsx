@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import { Github } from "lucide-react";
 
 export const GithubLink: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ export const GithubLink: React.FC = () => {
       className="rounded-full"
       onClick={() => {}}
     >
-      Github
+      <Github />
     </Button>
   );
 };
