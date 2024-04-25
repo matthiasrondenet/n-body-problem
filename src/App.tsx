@@ -1,21 +1,37 @@
 import React from "react";
-import {
-  Layout,
-  LayoutBody,
-  LayoutHeader,
-} from "@/components/custom-ui/layout";
-import { SimulationsBoard } from "@/components/simulations/simulations-board";
-import { Header } from "@/components/header/header";
+import type { RouteRecord } from "vite-react-ssg";
 
-export const App: React.FC = () => {
-  return (
-    <Layout>
-      <LayoutHeader>
-        <Header />
-      </LayoutHeader>
-      <LayoutBody className="space-y-4">
-        <SimulationsBoard />
-      </LayoutBody>
-    </Layout>
-  );
-};
+const MainLayout = React.lazy(() => import("./components/layout/main-layout"));
+const Home = React.lazy(() => import("@/components/pages/home/home"));
+const Playground = React.lazy(
+  () => import("@/components/pages/playground/playground")
+);
+
+export const routes: RouteRecord[] = [
+  {
+    path: "/",
+    element: <MainLayout />,
+    entry: "src/main-layout.tsx",
+    children: [
+      {
+        index: true,
+        Component: Home,
+        entry: "src/components/pages/home/home.tsx",
+      },
+      {
+        path: "playground",
+        Component: Playground,
+        entry: "src/components/pages/playground/playground.tsx",
+      },
+      {
+        path: "presets/:preset?",
+        Component: Playground,
+        entry: "src/components/pages/playground/playground.tsx",
+      },
+      {
+        path: "*",
+        element: <p>not found</p>,
+      },
+    ],
+  },
+];

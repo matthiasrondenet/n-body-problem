@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "types": [],
 
     "baseUrl": ".",
     "paths": {
@@ -26,5 +27,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
+  "exclude": ["node_modules", "node_modules/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
