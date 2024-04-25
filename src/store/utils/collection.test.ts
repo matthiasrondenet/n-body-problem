@@ -1,5 +1,11 @@
 import { describe, expect, test } from "vitest";
-import { Collection, addKey, duplicateKey, removeKey } from "./collection";
+import {
+  Collection,
+  addKey,
+  duplicateKey,
+  patchKey,
+  removeKey,
+} from "./collection";
 
 type FooTest = {
   a: string;
@@ -14,7 +20,7 @@ const state: Collection<FooTest> = {
 };
 
 describe("add-key", () => {
-  test("should insert in collection when key does not already exist", () => {
+  test("should insert element in collection when key does not already exist", () => {
     const newValue: FooTest = { a: "a_2", b: true };
 
     const actual = addKey(state, "key_2", newValue);
@@ -37,7 +43,7 @@ describe("add-key", () => {
 });
 
 describe("remove-key", () => {
-  test("should remove in collection when key exists", () => {
+  test("should remove element in collection when key exists", () => {
     const actual = removeKey(state, "key_1");
 
     expect(actual).toEqual({});
@@ -51,7 +57,7 @@ describe("remove-key", () => {
 });
 
 describe("duplicate-key", () => {
-  test("should ducplicate in collection when key exists and newKey does not exist", () => {
+  test("should ducplicate element collection when key exists and newKey does not exist", () => {
     const actual = duplicateKey(state, "key_1", "key_2");
 
     expect(actual).toEqual({
@@ -77,5 +83,29 @@ describe("duplicate-key", () => {
     const actual = duplicateKey(s, "key_1", "key_2");
 
     expect(actual).toBe(s);
+  });
+});
+
+describe("patch-key", () => {
+  test("should patch element in collection when key exists", () => {
+    const patch: Partial<FooTest> = {
+      a: "a_1_new",
+    };
+
+    const actual = patchKey(state, "key_1", patch);
+
+    expect(actual).toEqual({
+      ["key_1"]: { a: "a_1_new", b: false },
+    });
+  });
+
+  test("should do nothing when key not exists", () => {
+    const patch: Partial<FooTest> = {
+      a: "a_1_new",
+    };
+
+    const actual = patchKey(state, "key_2", patch);
+
+    expect(actual).toBe(state);
   });
 });

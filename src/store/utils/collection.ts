@@ -32,6 +32,27 @@ export const removeKey = <
   return rest as C;
 };
 
+export const patchKey = <
+  T,
+  C extends Collection<T, K>,
+  K extends string = string
+>(
+  collection: C,
+  key: K,
+  patch: Partial<T>
+): C => {
+  if (collection[key] === undefined) {
+    return collection;
+  }
+  return {
+    ...collection,
+    [key]: {
+      ...collection[key],
+      ...patch,
+    },
+  };
+};
+
 export const duplicateKey = <
   T,
   C extends Collection<T, K>,
