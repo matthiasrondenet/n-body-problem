@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": []
+    "types": [],
+    "noUnusedParameters": false
   },
   "exclude": ["node_modules", "node_modules/*"],
   "include": ["vite.config.ts"]

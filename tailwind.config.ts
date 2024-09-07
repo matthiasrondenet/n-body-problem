@@ -1,7 +1,6 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import defaultColors from "tailwindcss/colors";
 import type { Config } from "tailwindcss";
-// declare module "tailwindcss/lib/util/flattenColorPalette";
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).

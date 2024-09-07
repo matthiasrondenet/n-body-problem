@@ -27,6 +27,19 @@ export const Nav: React.FC = () => {
             Home
           </NavLink>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavLink
+            to="presets"
+            className={({ isActive }) =>
+              cn(
+                navigationMenuTriggerStyle(),
+                isActive && "active dark:bg-slate-900 text-teal-600"
+              )
+            }
+          >
+            Preset
+          </NavLink>
+        </NavigationMenuItem>
         {playgroundKeys.length > 0 && (
           <NavigationMenuItem>
             <NavLink
@@ -42,19 +55,6 @@ export const Nav: React.FC = () => {
             </NavLink>
           </NavigationMenuItem>
         )}
-        <NavigationMenuItem>
-          <NavLink
-            to="presets"
-            className={({ isActive }) =>
-              cn(
-                navigationMenuTriggerStyle(),
-                isActive && "active dark:bg-slate-900 text-teal-600"
-              )
-            }
-          >
-            Preset
-          </NavLink>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { JsonEditor } from "@/components/ui-custom/json-editor";
 import {
   useSimulationActions,
-  useSimulationConfigCalculated,
+  useSimulationConfig,
 } from "../hooks/simulations-hooks";
 import { SimulationConfig } from "@/services/simulation/simulation-config-types";
 
@@ -11,7 +11,7 @@ type SettingsFormProps = {
 };
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({ id }) => {
-  const simulationConfig = useSimulationConfigCalculated(id);
+  const simulationConfig = useSimulationConfig(id);
 
   const { patchConfig } = useSimulationActions();
 

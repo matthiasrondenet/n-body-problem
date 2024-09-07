@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Simulation, SimulationProps } from "./simulation";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "../error-fallback";
+import { ClientOnly } from "vite-react-ssg";
 
 type SimulationAutoResizedProps = Omit<SimulationProps, "width" | "height"> & {
   id?: string;
@@ -39,13 +40,21 @@ export const SimulationAutoResized: React.FC<SimulationAutoResizedProps> = ({
           ref={measureRef}
           className={cn("h-full", className, withBorder && "rounded-lg border")}
         >
-          {width > 0 && height > 0 ? (
-            <Simulation width={width} height={height} {...props} />
-          ) : (
-            <div className="flex h-full flex-row items-center justify-center self-center">
-              <Loader />
-            </div>
-          )}
+          <ClientOnly
+            fallback={
+              <div className="flex h-full flex-row items-center justify-center self-center">
+                <Loader />
+              </div>
+            }
+          >
+            {() => {
+              return width > 0 && height > 0 ? (
+                <Simulation width={width} height={height} {...props} />
+              ) : (
+                <Loader />
+              );
+            }}
+          </ClientOnly>
         </div>
       </AspectRatio>
     </ErrorBoundary>

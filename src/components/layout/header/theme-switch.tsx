@@ -1,5 +1,5 @@
 import { useTheme } from "./theme-provider";
-import { useLayoutEffect } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
 import { Moon, Sun } from "lucide-react";
 import { TooltipText } from "@/components/ui-custom/tooltip-text";
 import { Switch } from "@/components/ui/switch";
@@ -9,7 +9,7 @@ export const ThemeSwitch = () => {
 
   /* Update theme-color meta tag
    * when theme is updated */
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const themeColor = theme === "dark" ? "#020817" : "#fff";
     const metaThemeColor = document.querySelector("meta[name='theme-color']");
     metaThemeColor && metaThemeColor.setAttribute("content", themeColor);

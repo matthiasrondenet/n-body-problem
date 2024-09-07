@@ -16,4 +16,14 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [
+    {
+      files: ["**/node_modules/**", "**/odex/**"],
+      rules: {
+        "@typescript-eslint/no-unused-vars": "off",
+        "no-unused-vars": "off",
+      },
+    },
+  ],
+  ignorePatterns: ["node_modules/", "dist/"],
 };

@@ -1,7 +1,7 @@
-import { Solver as OdexSolver, Options } from "odex";
+import { Solver as OdexSolver } from "odex";
 import { OdeEquation, SolverArguments, SolverResult } from "./solver";
 
-const option: Partial<Options> = {
+const option = {
   absoluteTolerance: 1e-10,
   relativeTolerance: 1e-10,
   denseOutput: true,
@@ -39,7 +39,7 @@ const graggBulirschStoer = (
     t0,
     f0,
     tn,
-    odexSolver.grid(h, (_xOut, yOut) => {
+    odexSolver.grid(h, (_xOut: number, yOut: number[]) => {
       results[i] = yOut;
       i++;
     })

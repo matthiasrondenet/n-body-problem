@@ -1,4 +1,5 @@
-import { createContext, useContext, useLayoutEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
 
 const themeStorageKey = "ui-theme";
 
@@ -27,7 +28,7 @@ export const ThemeProvider: React.FC<
     () => (localStorage.getItem(storageKey) as Theme) ?? defaultTheme
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");

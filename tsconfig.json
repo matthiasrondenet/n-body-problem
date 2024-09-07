@@ -4,7 +4,6 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
     "types": [],
 
     "baseUrl": ".",
@@ -22,11 +21,13 @@
 
     /* Linting */
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "global.d.ts"],
   "exclude": ["node_modules", "node_modules/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

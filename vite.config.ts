@@ -10,4 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  ssr: {
+    noExternal: ["react-use", "konva", "react-konva", "better-react-mathjax"],
+  },
 });
