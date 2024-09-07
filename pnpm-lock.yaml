@@ -38,7 +38,7 @@ specifiers:
   konva: ^9.3.14
   lodash-es: ^4.17.21
   lucide-react: ^0.372.0
-  odex: 3.0.0-rc.4
+  odex: file:odex-3.0.0-rc.4.tgz
   postcss: ^8.4.45
   prop-types: ^15.8.1
   react: ^18.3.1
@@ -86,7 +86,7 @@ dependencies:
   konva: 9.3.14
   lodash-es: 4.17.21
   lucide-react: 0.372.0_react@18.3.1
-  odex: 3.0.0-rc.4
+  odex: file:odex-3.0.0-rc.4.tgz
   prop-types: 15.8.1
   react: 18.3.1
   react-dom: 18.3.1_react@18.3.1
@@ -3869,10 +3869,6 @@ packages:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
 
-  /odex/3.0.0-rc.4:
-    resolution: {integrity: sha512-NPpR3eFHUJWQWYT9VParetnYF2bVe1p9iel1PHk2PLGgOdfXd7tr67XJi6x6fVzDmoKnUv1e9AtRtdwLxg2Z2Q==}
-    dev: false
-
   /on-headers/1.0.2:
     resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
     engines: {node: '>= 0.8'}
@@ -5452,4 +5448,10 @@ packages:
       '@types/react': 18.3.5
       react: 18.3.1
       use-sync-external-store: 1.2.2_react@18.3.1
+    dev: false
+
+  file:odex-3.0.0-rc.4.tgz:
+    resolution: {integrity: sha512-N3e9SFl7yrigDrU8FsM7kRs8RItewNaSBAzzmyHI5O/GTIjGXtM8mOEW4vXWftyD95xy/P7MGOzv5zTwH/C1CA==, tarball: file:odex-3.0.0-rc.4.tgz}
+    name: odex
+    version: 3.0.0-rc.4
     dev: false
