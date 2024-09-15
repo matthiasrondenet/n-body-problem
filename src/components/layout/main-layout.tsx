@@ -1,6 +1,6 @@
-import { PropsWithChildren, Suspense, useState } from "react";
+import { PropsWithChildren, Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { ClientOnly, Head } from "vite-react-ssg";
+import { ClientOnly } from "vite-react-ssg";
 import {
   Layout,
   LayoutBody,
@@ -27,15 +27,12 @@ const Theme: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 const MainLayout: React.FC = () => {
-  const [state] = useState(false);
-
   return (
     <>
-      <Head>
+      {/* <Head>
         <meta charSet="UTF-8" />
-
-        <title>head test {state ? "A" : "B"}</title>
-      </Head>
+        <title>N Body simulation</title>
+      </Head> */}
       <main>
         <Theme>
           <Layout>
