@@ -43,31 +43,10 @@ const chaotic1Config: SimulationConfig = {
   ],
 };
 
-const chaoticFigure8Config: SimulationConfig = {
-  ...defaultSimulationConfig,
-  name: "Chaotic 2 test 8 - Orbit 𝑉.1.𝐴",
-  description: "Šuvakov - V - Figure 8",
-  bodies: [
-    {
-      initialPosition: { x: -1, y: 0 },
-      initialVelocity: { x: 0.347113, y: 0.532727 },
-    },
-    {
-      initialPosition: { x: 1, y: 0 },
-      initialVelocity: { x: 0.347113, y: 0.532727 },
-    },
-    // {
-    //   initialPosition: { x: 0, y: 0 },
-    //   initialVelocity: { x: -0.694226, y: -1.065454 },
-    // },
-  ],
-};
-
-export const chaoticPresetNames = ["Chaotic 1", "Chaotic 2"] as const;
+export const chaoticPresetNames = ["Chaotic 1"] as const;
 
 export type ChaoticPreset = (typeof chaoticPresetNames)[number];
 
 export const chaoticPresets: Record<ChaoticPreset, SimulationConfig> = {
   "Chaotic 1": chaotic1Config,
-  "Chaotic 2": chaoticFigure8Config,
 };

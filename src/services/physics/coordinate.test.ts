@@ -5,12 +5,12 @@ import {
   convertToCartesian,
   convertToPolar,
 } from "./coordinate";
-import { sunEartDistance, sunJupiterDistance } from "./constants";
+import { sunEarthDistance, sunJupiterDistance } from "./constants";
 
 describe("convert coordinates from polar to cartesian", () => {
   test.each([
     ["sun", { r: 0, theta: 0 }, { x: 0, y: 0 }],
-    ["earth", { r: sunEartDistance, theta: 0 }, { x: 149_597_870_000, y: 0 }],
+    ["earth", { r: sunEarthDistance, theta: 0 }, { x: 149_597_870_000, y: 0 }],
     ["jupiter", { r: sunJupiterDistance, theta: 0 }, { x: 777830000000, y: 0 }],
     ["(-1,0)", { r: 1, theta: Math.PI }, { x: -1, y: 0 }],
     ["(1,0)", { r: 1, theta: 0 }, { x: 1, y: 0 }],
@@ -34,7 +34,7 @@ describe("convert coordinates from polar to cartesian", () => {
 describe("convert coordinates from cartesian to polar", () => {
   test.each([
     ["sun", { x: 0, y: 0 }, { r: 0, theta: 0 }],
-    ["earth", { x: 149_597_870_000, y: 0 }, { r: sunEartDistance, theta: 0 }],
+    ["earth", { x: 149_597_870_000, y: 0 }, { r: sunEarthDistance, theta: 0 }],
     [
       "jupiter",
       { x: 778_000_000_000, y: 0 },

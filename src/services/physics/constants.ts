@@ -17,9 +17,9 @@ export const solarMass = 1.988_550e30;
 /**
  * Sun - Earth distance: 149,597,870 km = (1 AU)
  */
-export const sunEartDistance = 149_597_870_000; // in m
+export const sunEarthDistance = 149_597_870_000; // in m
 
-export const celestalBodies = [
+export const celestialBodies = [
   "Sun",
   "Mercury",
   "Venus",
@@ -39,7 +39,7 @@ export const celestalBodies = [
   "Kepler-16 B",
   "Kepler-16 b",
 ] as const;
-export type CelestalBody = (typeof celestalBodies)[number];
+export type CelestalBody = (typeof celestialBodies)[number];
 
 export type SolarSystemPlanet = Extract<
   CelestalBody,
@@ -58,7 +58,7 @@ export type SolarSystemPlanet = Extract<
  * */
 export const masses: Record<CelestalBody, number> = {
   Sun: solarMass,
-  Mercury: 3.301_100e22, // 3.301,100 * 10^23 kg
+  Mercury: 3.301_100e23, // 3.301,100 * 10^23 kg
   Venus: 4.867_500e24, // 4.867,500 * 10^24 kg
   Earth: 5.972_400e24, // 5.972,400 * 10^24 kg
   Mars: 6.417_100e23, // 6.417,100 * 10^23 kg
@@ -91,14 +91,14 @@ export const diameters: Partial<Record<CelestalBody, number>> = {
  * solar system planets distance from the sun, in m
  */
 export const heliocentricDistance: Record<SolarSystemPlanet, number> = {
-  Mercury: 0.38709893 * sunEartDistance,
-  Venus: 0.72333199 * sunEartDistance,
-  Earth: sunEartDistance, // 1 AU
-  Mars: 1.52366231 * sunEartDistance,
-  Jupiter: 5.20336301 * sunEartDistance,
-  Saturn: 9.53707032 * sunEartDistance,
-  Uranus: 19.19126393 * sunEartDistance,
-  Neptune: 30.06896348 * sunEartDistance,
+  Mercury: 0.38709893 * sunEarthDistance,
+  Venus: 0.72333199 * sunEarthDistance,
+  Earth: sunEarthDistance, // 1 AU
+  Mars: 1.52366231 * sunEarthDistance,
+  Jupiter: 5.20336301 * sunEarthDistance,
+  Saturn: 9.53707032 * sunEarthDistance,
+  Uranus: 19.19126393 * sunEarthDistance,
+  Neptune: 30.06896348 * sunEarthDistance,
 };
 
 export const earthMoonDistance = 384_400_000; // 384,400 km
@@ -117,6 +117,13 @@ export const velocities: Record<SolarSystemPlanet, number> = {
   Neptune: 5.43e3, // 5.43 km/s
 };
 
+// export const velocities2 = {
+//   Mercury:
+//     (2 * Math.PI * heliocentricDistance2.Mercury) / orbitalPeriods.Mercury,
+//   Venus: (2 * Math.PI * heliocentricDistance2.Venus) / orbitalPeriods.Venus,
+//   Earth: (2 * Math.PI * heliocentricDistance2.Earth) / orbitalPeriods.Earth,
+// };
+
 /**
  * Sun - Jupiter distance: 778,300,000 km
  */
@@ -133,17 +140,17 @@ export const jupiterIoDistance = 421_700_000;
 export const jupiterToEuropaDiastance = 671_100_000;
 
 /**
- * Sun density : 1408 (kg.m^-3)
+ * Sun density : 1408 kg.m^-3
  */
 export const sunDensity = 1_408;
 
 /**
- * Earth density : 5515 kg/m^3
+ * Earth density : 5515 kg.m^-3
  */
 export const earthDensity = 5_515;
 
 /**
- * Jupiter density : 1326 kg.m^-3)
+ * Jupiter density : 1326 kg.m^-3
  */
 export const jupiterDensity = 1_326;
 
