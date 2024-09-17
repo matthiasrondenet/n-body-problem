@@ -19,10 +19,9 @@ const figureEightConfig: SimulationConfig = {
   description: "stable three-body system discovered by Cris Moore",
   gravitationalConstant: 1,
   timeUnit: 1,
-  timeSpeed: 10,
+  timeSpeed: 100,
   bodies: [
     {
-      mass: 1,
       initialPosition: figure8Position,
       initialVelocity: {
         x: -figure8Velocity.x / 2,
@@ -30,7 +29,6 @@ const figureEightConfig: SimulationConfig = {
       },
     },
     {
-      mass: 1,
       initialPosition: {
         x: -figure8Position.x,
         y: -figure8Position.y,
@@ -41,7 +39,6 @@ const figureEightConfig: SimulationConfig = {
       },
     },
     {
-      mass: 1,
       initialPosition: { x: 0, y: 0 },
       initialVelocity: {
         ...figure8Velocity,

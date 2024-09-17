@@ -7,42 +7,14 @@ import {
   earthMoonDistance,
   oneDayInSeconds,
   sunEarthDistance,
+  moonVelocity,
+  gravitationalConstant,
 } from "../physics/constants";
 import {
   defaultSimulationConfig,
   SimulationBodyConfig,
   SimulationConfig,
 } from "../simulation/simulation-config-types";
-
-export const G = 6.6743e-11; // Gravitational constant
-export const AU = 1.495978707e11; // Astronomical Unit in meters
-export const solarMass = 1.9885e30; // Mass of the Sun in kg
-
-export const masses2 = {
-  Sun: solarMass,
-  Mercury: 3.3011e23,
-  Venus: 4.8675e24,
-  Earth: 5.97237e24,
-};
-
-export const diameters2 = {
-  Sun: 1.3927e9,
-  Mercury: 4.879e6,
-  Venus: 1.2104e7,
-  Earth: 1.2742e7,
-};
-
-export const heliocentricDistance2 = {
-  Mercury: 0.387 * AU,
-  Venus: 0.723 * AU,
-  Earth: AU,
-};
-
-export const orbitalPeriods = {
-  Mercury: 87.97 * 24 * 60 * 60, // in seconds
-  Venus: 224.7 * 24 * 60 * 60,
-  Earth: 365.25 * 24 * 60 * 60,
-};
 
 export const sun: SimulationBodyConfig = {
   name: "Sun",
@@ -66,12 +38,12 @@ export const mercury: SimulationBodyConfig = {
   diameter: diameters["Mercury"],
 
   initialPosition: {
-    r: heliocentricDistance["Mercury"],
-    theta: Math.PI,
+    x: heliocentricDistance["Mercury"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Mercury"],
-    theta: -Math.PI / 2,
+    x: 0,
+    y: velocities["Mercury"],
   },
 };
 
@@ -81,12 +53,12 @@ export const venus: SimulationBodyConfig = {
   mass: masses["Venus"],
   diameter: diameters["Venus"],
   initialPosition: {
-    r: heliocentricDistance["Venus"],
-    theta: 0,
+    x: -heliocentricDistance["Venus"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Venus"],
-    theta: Math.PI / 2,
+    x: 0,
+    y: -velocities["Venus"],
   },
 };
 
@@ -96,28 +68,54 @@ export const earth: SimulationBodyConfig = {
   mass: masses["Earth"],
   diameter: diameters["Earth"],
   initialPosition: {
-    r: heliocentricDistance["Earth"],
-    theta: Math.PI / 2,
+    x: heliocentricDistance["Earth"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Earth"],
-    theta: -Math.PI,
+    x: 0,
+    y: velocities["Earth"],
   },
 };
 
 const moon: SimulationBodyConfig = {
   name: "moon",
-  color: "red",
+  color: "gray",
   mass: masses["Moon"],
   diameter: diameters["Moon"],
   initialPosition: {
-    r: heliocentricDistance["Earth"] + earthMoonDistance,
-    theta: 0,
+    x: heliocentricDistance["Earth"] + earthMoonDistance,
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Earth"],
-    theta: Math.PI / 2,
+    x: 0,
+    y: velocities["Earth"] + moonVelocity,
   },
+  // initialPosition: {
+  //   r: heliocentricDistance["Earth"] + earthMoonDistance,
+  //   theta: 0, // Start directly aligned with Earth
+  // },
+  // initialVelocity: {
+  //   r: Math.sqrt((G * masses["Earth"]) / earthMoonDistance), // Correct orbital speed
+  //   theta: Math.PI, // Perpendicular to the radius vector
+  // },
+  // initialPosition: {
+  //   r: heliocentricDistance["Earth"] + earthMoonDistance,
+  //   theta: Math.PI / 2,
+  // },
+  // initialVelocity: {
+  //   // r: moonVelocity,
+  //   r: Math.sqrt(
+  //     (G * masses["Earth"]) / earthMoonDistance // Use only the distance to the moon
+  //   ), // Correct orbital speed
+  //   theta: -Math.PI, // A
+  //   // r: velocities["Earth"],
+  //   // theta: Math.PI / 2,
+  //   // r: Math.sqrt(
+  //   //   (G * masses["Earth"]) /
+  //   //     (heliocentricDistance["Earth"] + earthMoonDistance)
+  //   // ), // Correct orbital speed
+  //   // theta: Math.PI / 2, // Adjusted to create an orbit around Earth
+  // },
 };
 
 export const mars: SimulationBodyConfig = {
@@ -126,12 +124,12 @@ export const mars: SimulationBodyConfig = {
   mass: masses["Mars"],
   diameter: diameters["Mars"],
   initialPosition: {
-    r: heliocentricDistance["Mars"],
-    theta: -Math.PI / 2,
+    x: -heliocentricDistance["Mars"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Mars"],
-    theta: 0,
+    x: 0,
+    y: -velocities["Mars"],
   },
 };
 
@@ -141,12 +139,12 @@ const jupiter: SimulationBodyConfig = {
   mass: masses["Jupiter"],
   diameter: diameters["Jupiter"],
   initialPosition: {
-    r: heliocentricDistance["Jupiter"],
-    theta: 0,
+    x: heliocentricDistance["Jupiter"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Jupiter"],
-    theta: Math.PI / 2,
+    x: 0,
+    y: velocities["Jupiter"],
   },
 };
 
@@ -156,12 +154,12 @@ const saturn: SimulationBodyConfig = {
   mass: masses["Saturn"],
   diameter: diameters["Saturn"],
   initialPosition: {
-    r: heliocentricDistance["Saturn"],
-    theta: -Math.PI / 2,
+    x: -heliocentricDistance["Saturn"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Saturn"],
-    theta: 0,
+    x: 0,
+    y: -velocities["Saturn"],
   },
 };
 
@@ -171,12 +169,12 @@ const uranus: SimulationBodyConfig = {
   mass: masses["Uranus"],
   diameter: diameters["Uranus"],
   initialPosition: {
-    r: heliocentricDistance["Uranus"],
-    theta: (11 * Math.PI) / 6,
+    x: heliocentricDistance["Uranus"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Uranus"],
-    theta: Math.PI / 2,
+    x: 0,
+    y: velocities["Uranus"],
   },
 };
 
@@ -186,31 +184,45 @@ const neptune: SimulationBodyConfig = {
   mass: masses["Neptune"],
   diameter: diameters["Neptune"],
   initialPosition: {
-    r: heliocentricDistance["Neptune"],
-    theta: 0,
+    x: -heliocentricDistance["Neptune"],
+    y: 0,
   },
   initialVelocity: {
-    r: velocities["Neptune"],
-    theta: Math.PI / 2,
+    x: 0,
+    y: -velocities["Neptune"],
   },
 };
+
+const kepler16A_rA =
+  (0.22431 * sunEarthDistance * masses["Kepler-16 B"]) /
+  (masses["Kepler-16 B"] + masses["Kepler-16 A"]);
+
+const kepler16A_rB =
+  (0.22431 * sunEarthDistance * masses["Kepler-16 A"]) /
+  (masses["Kepler-16 B"] + masses["Kepler-16 A"]);
+
+const kepler16A_vA = Math.sqrt(
+  (gravitationalConstant * (masses["Kepler-16 B"] + masses["Kepler-16 A"])) /
+    kepler16A_rA
+);
+
+const kepler16A_vB = Math.sqrt(
+  (gravitationalConstant * (masses["Kepler-16 B"] + masses["Kepler-16 A"])) /
+    kepler16A_rB
+);
 
 export const kepler16A: SimulationBodyConfig = {
   name: "Kepler-16 A",
   color: "yellow",
   mass: masses["Kepler-16 A"],
   initialPosition: {
-    r:
-      (0.22431 * sunEarthDistance * masses["Kepler-16 B"]) /
-      (masses["Kepler-16 B"] + masses["Kepler-16 A"]),
+    r: kepler16A_rA,
     theta: 0,
   },
   initialVelocity: {
     r: 13 * Math.pow(10, 3),
+    // r: kepler16A_vA,
     theta: Math.PI / 2,
-    // r: -0.38149
-    // r: 0,
-    // theta: -Math.PI / 1775000,
   },
 };
 
@@ -219,12 +231,11 @@ export const kepler16B: SimulationBodyConfig = {
   color: "orange",
   mass: masses["Kepler-16 B"],
   initialPosition: {
-    r:
-      (0.22431 * sunEarthDistance * masses["Kepler-16 A"]) /
-      (masses["Kepler-16 B"] + masses["Kepler-16 A"]),
+    r: kepler16A_rB,
     theta: Math.PI,
   },
   initialVelocity: {
+    // r: kepler16A_vB,
     r: 44 * Math.pow(10, 3),
     theta: (3 * Math.PI) / 2,
     // r: 0,
@@ -237,8 +248,7 @@ export const kepler16b: SimulationBodyConfig = {
   color: "violet",
   mass: masses["Kepler-16 b"],
   initialPosition: {
-    r: 0.7048 * 1.496 * Math.pow(10, 11),
-    // r: 0.7048 * sunEarthDistance,
+    r: 0.7048 * sunEarthDistance,
     theta: 0,
   },
   initialVelocity: {
@@ -255,13 +265,13 @@ const solarSystemConfig: SimulationConfig = {
   description: `(Sun-centered) solar system configuration.`,
   solverName: "Gragg Bulirsch Stoer",
   timeUnit: oneDayInSeconds * 180,
-  nbOfSteps: 30_000,
+  nbOfSteps: 40_000,
   timeSpeed: 100,
   bodies: [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune],
   graphicalConfig: {
     ...defaultSimulationConfig.graphicalConfig,
-    diametersScalingFunc: "exponential",
-    distancesScalingFunc: "linear",
+    diametersScalingFunc: "log10",
+    distancesScalingFunc: "cubic-root",
     distancesScalingFactor: 2,
     maximumSizePixels: 20,
     minimumSizePixels: 2,
@@ -275,6 +285,14 @@ const sunEarthMoonConfig: SimulationConfig = {
   timeUnit: oneYearInSeconds,
   timeSpeed: 10,
   bodies: [sun, earth, moon],
+  graphicalConfig: {
+    ...defaultSimulationConfig.graphicalConfig,
+    diametersScalingFunc: "cubic-root",
+    distancesScalingFunc: "logarithmic",
+    distancesScalingFactor: 1.4,
+    maximumSizePixels: 30,
+    minimumSizePixels: 1,
+  },
 };
 
 const sunEarthJupiterConfig: SimulationConfig = {

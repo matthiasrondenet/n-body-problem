@@ -176,20 +176,22 @@ export const useDrawScaling = ({
     ]
   );
 
-  const transformXFunc = useCallback(
-    (value: number): number => transformDistanceFunc(value) + center.x,
-    [center.x, transformDistanceFunc]
-  );
-
-  const transformYFunc = useCallback(
-    (value: number): number => -transformDistanceFunc(value) + center.y,
-    [center.y, transformDistanceFunc]
+  const transformXYFunc = useCallback(
+    (x: number, y: number) => {
+      const distance = calculateHypotenuse(x, y);
+      const transformed = transformDistanceFunc(distance);
+      const ratio = transformed / distance;
+      return {
+        x: x * ratio + center.x,
+        y: -y * ratio + center.y,
+      };
+    },
+    [center.x, center.y, transformDistanceFunc]
   );
 
   return {
     transformDiameterFunc,
-    transformXFunc,
-    transformYFunc,
+    transformXYFunc,
   };
 };
 
@@ -246,14 +248,13 @@ export const useSimulation = ({
     [simulationConfig]
   );
 
-  const { transformDiameterFunc, transformXFunc, transformYFunc } =
-    useDrawScaling({
-      width,
-      height,
-      graphicalConfig: simulationConfig.graphicalConfig,
-      bodiesDiameters: simulationConfig.bodies.map((x) => x.diameter),
-      bodiesDistances: bodiesDistanceFromCenter,
-    });
+  const { transformDiameterFunc, transformXYFunc } = useDrawScaling({
+    width,
+    height,
+    graphicalConfig: simulationConfig.graphicalConfig,
+    bodiesDiameters: simulationConfig.bodies.map((x) => x.diameter),
+    bodiesDistances: bodiesDistanceFromCenter,
+  });
 
   const getContentFor = (
     contentType: AdditionalContentType
@@ -291,8 +292,7 @@ export const useSimulation = ({
   return {
     additionnalContents,
     transformDiameterFunc,
-    transformXFunc,
-    transformYFunc,
+    transformXYFunc,
   };
 };
 

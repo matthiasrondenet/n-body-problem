@@ -6,9 +6,11 @@ import {
 const chaotic1Config: SimulationConfig = {
   ...defaultSimulationConfig,
   gravitationalConstant: 1,
+  timeUnit: 1,
+  nbOfSteps: 12_000,
+  timeSpeed: 100,
   bodies: [
     {
-      mass: 1,
       initialPosition: {
         r: 1,
         theta: 0,
@@ -19,7 +21,6 @@ const chaotic1Config: SimulationConfig = {
       },
     },
     {
-      mass: 1,
       initialPosition: {
         r: 1,
         theta: (2 * Math.PI) / 3,
@@ -30,7 +31,6 @@ const chaotic1Config: SimulationConfig = {
       },
     },
     {
-      mass: 1,
       initialPosition: {
         r: 1,
         theta: (4 * Math.PI) / 3,

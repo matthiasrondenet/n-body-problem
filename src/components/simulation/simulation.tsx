@@ -53,25 +53,20 @@ export const Simulation: React.FC<SimulationProps> = ({
         comBodyLinesMap: comBodyLinesRefMap.current,
         comLine: comLineRef.current,
       },
-      transformXFunc: transformXFunc,
-      transformYFunc: transformYFunc,
+      transformXYFunc: transformXYFunc,
     });
   };
 
-  const {
-    additionnalContents,
-    transformXFunc,
-    transformYFunc,
-    transformDiameterFunc,
-  } = useSimulation({
-    width,
-    height,
-    simulationConfig,
-    statusType,
-    onStatusTypeChanged,
-    onSimulationLoop,
-    onSimulationLoopResultStateChanged,
-  });
+  const { additionnalContents, transformXYFunc, transformDiameterFunc } =
+    useSimulation({
+      width,
+      height,
+      simulationConfig,
+      statusType,
+      onStatusTypeChanged,
+      onSimulationLoop,
+      onSimulationLoopResultStateChanged,
+    });
 
   const stageRef = useRef<Konva.Stage>(null);
   const layerComRef = useRef<Konva.Layer>(null);
@@ -85,10 +80,10 @@ export const Simulation: React.FC<SimulationProps> = ({
 
   const redColor = getColorOrDefault("red", "500");
 
-  const drawableCenterOfMassPosition = {
-    x: transformXFunc(simulationConfig.centerOfMassPosition.x),
-    y: transformYFunc(simulationConfig.centerOfMassPosition.y),
-  };
+  const drawableCenterOfMassPosition = transformXYFunc(
+    simulationConfig.centerOfMassPosition.x,
+    simulationConfig.centerOfMassPosition.y
+  );
 
   return (
     <Stage id="stage" height={height} width={width} ref={stageRef}>

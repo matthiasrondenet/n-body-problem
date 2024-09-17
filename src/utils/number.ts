@@ -15,6 +15,7 @@ export const rangeScalingFunctionNames = [
   "exponential",
   "log10",
   "sqrt",
+  "cubic-root",
   "quadratic",
   "cubic",
 ] as const;
@@ -40,6 +41,7 @@ export const rangeScalingFunctions: Record<
   log10: (x, min, max) =>
     min + (Math.log10(x * 9 + 1) / Math.log10(10)) * (max - min),
   sqrt: (x, min, max) => min + Math.sqrt(x) * (max - min),
+  "cubic-root": (x, min, max) => min + Math.cbrt(x) * (max - min),
   quadratic: (x, min, max) => min + x * x * (max - min),
   cubic: (x, min, max) => min + x * x * x * (max - min),
 };

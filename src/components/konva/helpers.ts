@@ -44,8 +44,7 @@ export const updateDrawing = ({
   resultState: { allResults, currentIndex },
   simulationConfig: { graphicalConfig, bodies },
   comPosition,
-  transformXFunc,
-  transformYFunc,
+  transformXYFunc,
   konvaRefs: {
     layerCom,
     layerDebug,
@@ -59,8 +58,7 @@ export const updateDrawing = ({
   resultState: SimulationResultState;
   simulationConfig: SimulationType;
   comPosition: CartesianCoordinate2d;
-  transformXFunc: (x: number) => number;
-  transformYFunc: (x: number) => number;
+  transformXYFunc: (x: number, y: number) => CartesianCoordinate2d;
 } & {
   konvaRefs: {
     stage: Konva.Stage | null;
@@ -96,30 +94,26 @@ export const updateDrawing = ({
     updateBodyPosition({
       body: bodiesMap[i],
       bodyState: bodiesStates[i],
-      transformXFunc: transformXFunc,
-      transformYFunc: transformYFunc,
+      transformXYFunc: transformXYFunc,
     });
     updateOrbitPoints({
       orbit: orbitsMap[i],
       bodyLinesStates: bodiesLinesHistory[i],
-      transformXFunc: transformXFunc,
-      transformYFunc: transformYFunc,
+      transformXYFunc: transformXYFunc,
     });
   }
 
   updateComLine({
     line: comLine,
     bodiesState: bodiesStates,
-    transformXFunc: transformXFunc,
-    transformYFunc: transformYFunc,
+    transformXYFunc: transformXYFunc,
   });
   for (let i = 0; i < numberOfBodies; i++) {
     updateComBodyLine({
       line: comBodyLinesMap[i],
       bodyState: bodiesStates[i],
       centerOfMassPosition: comPosition,
-      transformXFunc: transformXFunc,
-      transformYFunc: transformYFunc,
+      transformXYFunc: transformXYFunc,
     });
   }
 
@@ -143,20 +137,18 @@ export const updateDrawing = ({
 export const updateOrbitPoints = ({
   orbit,
   bodyLinesStates,
-  transformXFunc,
-  transformYFunc,
+  transformXYFunc,
 }: {
   orbit: Konva.Line | null;
   bodyLinesStates: BodyState[];
-  transformXFunc: (x: number) => number;
-  transformYFunc: (x: number) => number;
+  transformXYFunc: (x: number, y: number) => CartesianCoordinate2d;
 }) => {
   if (!orbit) return;
 
-  const bodyLinesPoints = bodyLinesStates.flatMap((state) => [
-    transformXFunc(state[POSITION_X]),
-    transformYFunc(state[POSITION_Y]),
-  ]);
+  const bodyLinesPoints = bodyLinesStates.flatMap((state) => {
+    const transformed = transformXYFunc(state[POSITION_X], state[POSITION_Y]);
+    return [transformed.x, transformed.y];
+  });
 
   orbit.points(bodyLinesPoints);
 };
@@ -164,20 +156,19 @@ export const updateOrbitPoints = ({
 export const updateBodyPosition = ({
   body,
   bodyState,
-  transformXFunc,
-  transformYFunc,
+  transformXYFunc,
 }: {
   body: Konva.Group | null;
   bodyState: BodyState;
-  transformXFunc: (x: number) => number;
-  transformYFunc: (x: number) => number;
+  transformXYFunc: (x: number, y: number) => CartesianCoordinate2d;
 }) => {
   if (!body) return;
 
   const [x, y, vX, vY] = bodyState;
+  const transformed = transformXYFunc(x, y);
 
-  body.x(transformXFunc(x));
-  body.y(transformYFunc(y));
+  body.x(transformed.x);
+  body.y(transformed.y);
 
   const tooltipCoordinates = body.findOne<Konva.Text>(
     "#tooltip-content-coordinates"
@@ -205,20 +196,18 @@ export const updateBodyPosition = ({
 export const updateComLine = ({
   line,
   bodiesState,
-  transformXFunc,
-  transformYFunc,
+  transformXYFunc,
 }: {
   line: Konva.Line | null;
   bodiesState: BodyState[];
-  transformXFunc: (x: number) => number;
-  transformYFunc: (x: number) => number;
+  transformXYFunc: (x: number, y: number) => CartesianCoordinate2d;
 }) => {
   if (!line) return;
 
-  const comLinePoints = bodiesState.flatMap((state) => [
-    transformXFunc(state[POSITION_X]),
-    transformYFunc(state[POSITION_Y]),
-  ]);
+  const comLinePoints = bodiesState.flatMap((state) => {
+    const transformed = transformXYFunc(state[POSITION_X], state[POSITION_Y]);
+    return [transformed.x, transformed.y];
+  });
 
   line.points(comLinePoints);
 };
@@ -227,22 +216,29 @@ export const updateComBodyLine = ({
   line,
   bodyState,
   centerOfMassPosition,
-  transformXFunc,
-  transformYFunc,
+  transformXYFunc,
 }: {
   line: Konva.Line | null;
   bodyState: BodyState;
   centerOfMassPosition: CartesianCoordinate2d;
-  transformXFunc: (x: number) => number;
-  transformYFunc: (x: number) => number;
+  transformXYFunc: (x: number, y: number) => CartesianCoordinate2d;
 }) => {
   if (!line) return;
 
+  const transformed = transformXYFunc(
+    bodyState[POSITION_X],
+    bodyState[POSITION_Y]
+  );
+  const transformedCom = transformXYFunc(
+    centerOfMassPosition.x,
+    centerOfMassPosition.y
+  );
+
   line.points([
-    transformXFunc(bodyState[POSITION_X]),
-    transformYFunc(bodyState[POSITION_Y]),
-    transformXFunc(centerOfMassPosition.x),
-    transformYFunc(centerOfMassPosition.y),
+    transformed.x,
+    transformed.y,
+    transformedCom.x,
+    transformedCom.y,
   ]);
   line.bezier(true);
 };

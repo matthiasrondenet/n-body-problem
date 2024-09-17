@@ -1,12 +1,22 @@
 import { Preset, presetKeys } from "@/services/presets/presets";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useSimulationActions } from "./simulations-hooks";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import {
+  useIsSimulationLoaded,
+  usePresetKey,
+  useSimulationActions,
+} from "./simulations-hooks";
 
 export const usePresetRoute = () => {
   const { addOrUpdatePreset } = useSimulationActions();
+
+  const presetKey = usePresetKey();
+  const isLoaded = useIsSimulationLoaded(presetKey);
   const location = useLocation();
-  const { preset, custom } = useParams();
+  const { preset } = useParams();
+  const [searchParams] = useSearchParams();
+
+  const custom = searchParams.get("custom");
 
   const presetParam =
     (Object.keys(presetKeys).find(
@@ -14,10 +24,10 @@ export const usePresetRoute = () => {
     ) as Preset | undefined) ?? "Figure Eight 1 (old)";
 
   useEffect(() => {
-    if (!custom) {
+    if (custom !== "true" || !isLoaded) {
       addOrUpdatePreset(presetParam);
     }
-  }, [presetParam, custom, addOrUpdatePreset]);
+  }, [presetParam, custom, isLoaded, addOrUpdatePreset]);
 
   return {
     isPresetRoute: location.pathname.startsWith("/presets"),
