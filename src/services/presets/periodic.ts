@@ -8,12 +8,10 @@ const defaultPeriodicConfig: SimulationConfig = {
   gravitationalConstant: 1,
   solverName: "Gragg Bulirsch Stoer",
   isPeriodic: true,
-  nbOfSteps: 12_000,
+  nbOfSteps: 15_000,
   timeSpeed: 30,
   graphicalConfig: {
     ...defaultSimulationConfig.graphicalConfig,
-    diametersScalingFunc: "logarithmic",
-    distancesScalingFunc: "linear",
     minimumSizePixels: 4,
     maximumSizePixels: 40,
   },
@@ -124,7 +122,7 @@ const yinYangiii3Ab: SimulationConfig = {
   ],
 };
 
-const mothiva2A: SimulationConfig = {
+export const mothiva2A: SimulationConfig = {
   ...defaultPeriodicConfig,
   name: "Moth I - Orbit IVa.2.A",
   description: "Šuvakov - IVa - Moth I",
@@ -292,7 +290,7 @@ const brouckeA13: SimulationConfig = {
   ],
 };
 
-const brouckeR7: SimulationConfig = {
+export const brouckeR7: SimulationConfig = {
   ...defaultPeriodicConfig,
   name: "Brouke - Orbit R7",
   description: "Šuvakov - Broucke",

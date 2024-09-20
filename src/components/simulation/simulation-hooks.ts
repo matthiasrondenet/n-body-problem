@@ -22,7 +22,11 @@ import {
   SimulationConfig,
 } from "@/services/simulation/simulation-config-types";
 import { buildSimulationResetKey, toSimulation } from "./simulation-helpers";
-import { normalizeValue, rangeScalingFunctions } from "@/utils/number";
+import {
+  normalizeValue,
+  RangeScalingFunction,
+  rangeScalingFunctions,
+} from "@/utils/number";
 
 export type SimulationResultState = {
   allResults: number[][];
@@ -137,6 +141,8 @@ export const useDrawScaling = ({
   const minDrawDiameterSize = Math.max(1, graphicalConfig.minimumSizePixels);
   const maxDrawDiameterSize = Math.min(100, graphicalConfig.maximumSizePixels);
 
+  const defaultRatio = maxDrawDistance / maxDistance;
+
   const center = centerPoint({ width, height });
 
   const transformDiameterFunc = useCallback(
@@ -160,33 +166,40 @@ export const useDrawScaling = ({
   );
 
   const transformDistanceFunc = useCallback(
-    (value: number): number => {
+    (value: number, func: RangeScalingFunction): number => {
       const normalized = normalizeValue(value, minDistance, maxDistance);
-      const transformed = rangeScalingFunctions[
-        graphicalConfig.distancesScalingFunc
-      ](normalized, minDrawDistance, maxDrawDistance);
+      const transformed = func(normalized, minDrawDistance, maxDrawDistance);
       return transformed;
     },
-    [
-      minDistance,
-      maxDistance,
-      minDrawDistance,
-      maxDrawDistance,
-      graphicalConfig.distancesScalingFunc,
-    ]
+    [minDistance, maxDistance, minDrawDistance, maxDrawDistance]
   );
 
   const transformXYFunc = useCallback(
     (x: number, y: number) => {
-      const distance = calculateHypotenuse(x, y);
-      const transformed = transformDistanceFunc(distance);
-      const ratio = transformed / distance;
+      let ratio = defaultRatio;
+      if (graphicalConfig.distancesScalingFunc) {
+        const distance = calculateHypotenuse(x, y);
+
+        const transformed = transformDistanceFunc(
+          distance,
+          rangeScalingFunctions[graphicalConfig.distancesScalingFunc]
+        );
+
+        ratio = distance === 0 ? 0 : transformed / distance;
+      }
+
       return {
         x: x * ratio + center.x,
         y: -y * ratio + center.y,
       };
     },
-    [center.x, center.y, transformDistanceFunc]
+    [
+      center.x,
+      center.y,
+      transformDistanceFunc,
+      graphicalConfig.distancesScalingFunc,
+      defaultRatio,
+    ]
   );
 
   return {

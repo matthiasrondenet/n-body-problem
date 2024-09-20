@@ -18,7 +18,6 @@ const figureEightConfig: SimulationConfig = {
   name: "Figure 8 (Cris Moore)",
   description: "stable three-body system discovered by Cris Moore",
   gravitationalConstant: 1,
-  timeUnit: 1,
   timeSpeed: 100,
   bodies: [
     {

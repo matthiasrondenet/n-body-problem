@@ -8,7 +8,6 @@ import {
   oneDayInSeconds,
   sunEarthDistance,
   moonVelocity,
-  gravitationalConstant,
 } from "../physics/constants";
 import {
   defaultSimulationConfig,
@@ -90,32 +89,6 @@ const moon: SimulationBodyConfig = {
     x: 0,
     y: velocities["Earth"] + moonVelocity,
   },
-  // initialPosition: {
-  //   r: heliocentricDistance["Earth"] + earthMoonDistance,
-  //   theta: 0, // Start directly aligned with Earth
-  // },
-  // initialVelocity: {
-  //   r: Math.sqrt((G * masses["Earth"]) / earthMoonDistance), // Correct orbital speed
-  //   theta: Math.PI, // Perpendicular to the radius vector
-  // },
-  // initialPosition: {
-  //   r: heliocentricDistance["Earth"] + earthMoonDistance,
-  //   theta: Math.PI / 2,
-  // },
-  // initialVelocity: {
-  //   // r: moonVelocity,
-  //   r: Math.sqrt(
-  //     (G * masses["Earth"]) / earthMoonDistance // Use only the distance to the moon
-  //   ), // Correct orbital speed
-  //   theta: -Math.PI, // A
-  //   // r: velocities["Earth"],
-  //   // theta: Math.PI / 2,
-  //   // r: Math.sqrt(
-  //   //   (G * masses["Earth"]) /
-  //   //     (heliocentricDistance["Earth"] + earthMoonDistance)
-  //   // ), // Correct orbital speed
-  //   // theta: Math.PI / 2, // Adjusted to create an orbit around Earth
-  // },
 };
 
 export const mars: SimulationBodyConfig = {
@@ -193,35 +166,36 @@ const neptune: SimulationBodyConfig = {
   },
 };
 
+const kepler16_AB_semi_major_axis = 0.22431 * sunEarthDistance;
+const kepler16_b_semi_major_axis = 0.7048 * sunEarthDistance;
+
+const kepler16_AB_period = 41.08 * oneDayInSeconds;
+const kepler_16_b_period = 229 * oneDayInSeconds;
+
+const kepler16_AB_vBinary =
+  (2 * Math.PI * kepler16_AB_semi_major_axis) / kepler16_AB_period;
+
+const kepler16_b_v =
+  (2 * Math.PI * kepler16_b_semi_major_axis) / kepler_16_b_period;
+
 const kepler16A_rA =
-  (0.22431 * sunEarthDistance * masses["Kepler-16 B"]) /
+  (kepler16_AB_semi_major_axis * masses["Kepler-16 B"]) /
   (masses["Kepler-16 B"] + masses["Kepler-16 A"]);
 
 const kepler16A_rB =
-  (0.22431 * sunEarthDistance * masses["Kepler-16 A"]) /
+  (kepler16_AB_semi_major_axis * masses["Kepler-16 A"]) /
   (masses["Kepler-16 B"] + masses["Kepler-16 A"]);
-
-const kepler16A_vA = Math.sqrt(
-  (gravitationalConstant * (masses["Kepler-16 B"] + masses["Kepler-16 A"])) /
-    kepler16A_rA
-);
-
-const kepler16A_vB = Math.sqrt(
-  (gravitationalConstant * (masses["Kepler-16 B"] + masses["Kepler-16 A"])) /
-    kepler16A_rB
-);
 
 export const kepler16A: SimulationBodyConfig = {
   name: "Kepler-16 A",
   color: "yellow",
   mass: masses["Kepler-16 A"],
   initialPosition: {
-    r: kepler16A_rA,
-    theta: 0,
+    x: -kepler16A_rA,
+    y: 0,
   },
   initialVelocity: {
-    r: 13 * Math.pow(10, 3),
-    // r: kepler16A_vA,
+    r: (kepler16_AB_vBinary * kepler16A_rA) / kepler16_AB_semi_major_axis,
     theta: Math.PI / 2,
   },
 };
@@ -231,31 +205,26 @@ export const kepler16B: SimulationBodyConfig = {
   color: "orange",
   mass: masses["Kepler-16 B"],
   initialPosition: {
-    r: kepler16A_rB,
-    theta: Math.PI,
+    x: kepler16A_rB,
+    y: 0,
   },
   initialVelocity: {
-    // r: kepler16A_vB,
-    r: 44 * Math.pow(10, 3),
-    theta: (3 * Math.PI) / 2,
-    // r: 0,
-    // theta: Math.PI / 1775000,
+    r: (kepler16_AB_vBinary * kepler16A_rB) / kepler16_AB_semi_major_axis,
+    theta: (3 / 2) * Math.PI,
   },
 };
 
 export const kepler16b: SimulationBodyConfig = {
-  name: " Kepler-16 b",
+  name: "Kepler-16 b",
   color: "violet",
   mass: masses["Kepler-16 b"],
   initialPosition: {
-    r: 0.7048 * sunEarthDistance,
-    theta: 0,
+    x: kepler16_b_semi_major_axis,
+    y: 0,
   },
   initialVelocity: {
-    r: 33 * Math.pow(10, 3),
+    r: kepler16_b_v,
     theta: Math.PI / 2,
-    // r: 0,
-    // theta: Math.PI / 9875000,
   },
 };
 
@@ -328,6 +297,7 @@ const sunEarthJupiterConfig: SimulationConfig = {
  * rA ≈ -0.0002261 AU
  * rB ≈ 0.0007696 AU
  * Kepler-16 b is located at 0.7048 AU
+ * Kepler-16 b has an orbital period of 229 days
  */
 const kepler16Config: SimulationConfig = {
   ...defaultSimulationConfig,
@@ -335,7 +305,7 @@ const kepler16Config: SimulationConfig = {
   description: "Simplified (circular approximation) of the Kepler 16 system",
   nbOfSteps: 10_000,
   timeSpeed: 100,
-  timeUnit: oneDayInSeconds * 41,
+  timeUnit: oneDayInSeconds * 41.08,
   bodies: [kepler16A, kepler16B, kepler16b],
   graphicalConfig: {
     ...defaultSimulationConfig.graphicalConfig,

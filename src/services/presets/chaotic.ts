@@ -1,52 +1,28 @@
-import {
-  defaultSimulationConfig,
-  SimulationConfig,
-} from "../simulation/simulation-config-types";
+import { SimulationConfig } from "../simulation/simulation-config-types";
+import { brouckeR7, mothiva2A } from "./periodic";
 
-const chaotic1Config: SimulationConfig = {
-  ...defaultSimulationConfig,
-  gravitationalConstant: 1,
-  timeUnit: 1,
-  nbOfSteps: 12_000,
-  timeSpeed: 100,
-  bodies: [
-    {
-      initialPosition: {
-        r: 1,
-        theta: 0,
-      },
-      initialVelocity: {
-        r: 0.55,
-        theta: Math.PI / 2,
-      },
-    },
-    {
-      initialPosition: {
-        r: 1,
-        theta: (2 * Math.PI) / 3,
-      },
-      initialVelocity: {
-        r: 0.55,
-        theta: (2 * Math.PI) / 3 + Math.PI / 2,
-      },
-    },
-    {
-      initialPosition: {
-        r: 1,
-        theta: (4 * Math.PI) / 3,
-      },
-      initialVelocity: {
-        r: 0.55,
-        theta: (4 * Math.PI) / 3 + Math.PI / 2,
-      },
-    },
-  ],
+const brouckeR7Chaotic: SimulationConfig = {
+  ...brouckeR7,
+  solverName: "Runge Kutta",
+  gravitationalConstant: 2,
+  isPeriodic: false,
 };
 
-export const chaoticPresetNames = ["Chaotic 1"] as const;
+const mothiva2AChaotic: SimulationConfig = {
+  ...mothiva2A,
+  solverName: "Runge Kutta",
+  gravitationalConstant: 2,
+  isPeriodic: false,
+};
+
+export const chaoticPresetNames = [
+  "Chaotic Brouke Orbit R7",
+  "Chaotic Moth IVa.2.A",
+] as const;
 
 export type ChaoticPreset = (typeof chaoticPresetNames)[number];
 
 export const chaoticPresets: Record<ChaoticPreset, SimulationConfig> = {
-  "Chaotic 1": chaotic1Config,
+  "Chaotic Brouke Orbit R7": brouckeR7Chaotic,
+  "Chaotic Moth IVa.2.A": mothiva2AChaotic,
 };

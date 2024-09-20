@@ -25,7 +25,7 @@ const defaultGraphicalConfig: GraphicalConfig = {
   additionnalContents: [],
 
   diametersScalingFunc: "logarithmic",
-  distancesScalingFunc: "linear",
+  distancesScalingFunc: undefined,
   distancesScalingFactor: 1,
 
   minimumSizePixels: 5,
@@ -64,7 +64,7 @@ export type GraphicalConfig = {
   additionnalContents: AdditionalContentType[];
 
   diametersScalingFunc: RangeScalingFunctionName;
-  distancesScalingFunc: RangeScalingFunctionName;
+  distancesScalingFunc: RangeScalingFunctionName | undefined;
   distancesScalingFactor: number;
 
   minimumSizePixels: number;
