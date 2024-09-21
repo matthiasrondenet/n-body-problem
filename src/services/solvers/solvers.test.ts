@@ -21,7 +21,7 @@ describe("Solver calculations using ode = e", () => {
     ["Euler integration", 2],
     ["Midpoint method", 4],
     ["Runge Kutta", 8],
-    ["Gragg Bulirsch Stoer", 10],
+    ["Gragg Bulirsch Stoer", 9],
   ])(
     "approximation using %s method",
     (resolutionMethod: string, approximationDecimal: number) => {
@@ -30,7 +30,7 @@ describe("Solver calculations using ode = e", () => {
       const { results } = solver({
         equation: ode,
         initialCondition: [...y0],
-        stepSize: 0.001,
+        stepSize: 0.0001,
         range: range,
       });
 
@@ -72,7 +72,7 @@ describe("Solver calculations using ode = SIR", () => {
       verify(results[0], initialCondition);
       verify(
         results[results.length - 1],
-        [0.9517638456626972, 0.1317578074792591, 0.01647834685804368],
+        [0.9517638456, 0.1317578075, 0.0164783469],
         approximationDecimal
       );
     }

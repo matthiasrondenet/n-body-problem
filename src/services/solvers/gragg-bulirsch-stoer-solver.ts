@@ -2,10 +2,10 @@ import { Solver as OdexSolver } from "odex";
 import { OdeEquation, SolverArguments, SolverResult } from "./solver";
 
 const option = {
-  absoluteTolerance: 1e-10,
-  relativeTolerance: 1e-10,
+  absoluteTolerance: 1e-12,
+  relativeTolerance: 1e-12,
   denseOutput: true,
-  maxSteps: 1e6,
+  maxSteps: 1e10,
 };
 
 export const graggBulirschStoerSolver = ({

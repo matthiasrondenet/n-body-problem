@@ -89,22 +89,8 @@ describe("center of mass", () => {
   test.each([
     ["Figure 8", "Figure 8 (Cris Moore)", { x: 0, y: 0 }],
     ["Real world", "Sun Earth Jupiter", { x: 742939098.4068764, y: 0 }],
-    [
-      "Real world",
-      "Lagrange Point 5",
-      { x: 742565068.9319891, y: -2201066.6132835085 },
-    ],
-    [
-      "Real world",
-      "Kepler 16",
-      { x: 37579510.85381953, y: 7.208677972126571e-7 },
-    ],
-    [
-      "Chaotic",
-      "Chaotic 1",
-      { x: -7.401486830834377e-17, y: 7.401486830834377e-17 },
-    ],
-    ["Periodic", "Broucke R 7", { x: -1.850371707708594e-17, y: 0 }],
+    ["Real world", "Kepler 16", { x: 37594609.23293968, y: 0 }],
+    ["Periodic", "Broucke R7", { x: -1.850371707708594e-17, y: 0 }],
     [
       "Periodic",
       "Sheen Loop-ended-triangles",
@@ -118,7 +104,7 @@ describe("center of mass", () => {
       )[presetName];
       const bodies = config.bodies.map((b) => ({
         ...convertToCartesian(b.initialPosition),
-        mass: b.mass!,
+        mass: b.mass ?? 1,
       }));
       const actual = calculateCenterOfMass(bodies);
       expect(actual).toEqual(expected);

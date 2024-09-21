@@ -37,7 +37,7 @@ describe("convert coordinates from cartesian to polar", () => {
     ["earth", { x: 149_597_870_000, y: 0 }, { r: sunEarthDistance, theta: 0 }],
     [
       "jupiter",
-      { x: 778_000_000_000, y: 0 },
+      { x: 777_830_000_000, y: 0 },
       { r: sunJupiterDistance, theta: 0 },
     ],
     ["(-1,0)", { x: -1, y: 0 }, { r: 1, theta: Math.PI }],
