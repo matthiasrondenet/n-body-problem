@@ -122,9 +122,9 @@ export const Simulation: React.FC<SimulationProps> = ({
             />
             {simulationConfig.bodies.map((_, i) => (
               <Line
-                ref={(ref: Konva.Line | null) =>
-                  (comBodyLinesRefMap.current[i] = ref)
-                }
+                ref={(ref: Konva.Line | null) => {
+                  comBodyLinesRefMap.current[i] = ref ?? null;
+                }}
                 key={i}
                 stroke={redColor}
                 strokeWidth={2}
@@ -140,7 +140,9 @@ export const Simulation: React.FC<SimulationProps> = ({
             <Body
               key={b.name ?? i}
               name={b.name}
-              ref={(ref: Konva.Group | null) => (bodiesRefMap.current[i] = ref)}
+              ref={(ref: Konva.Group | null) => {
+                bodiesRefMap.current[i] = ref ?? null;
+              }}
               radius={transformDiameterFunc(b.diameter) / 2}
               color={b.color}
               displayCoordinates={
@@ -158,7 +160,9 @@ export const Simulation: React.FC<SimulationProps> = ({
           simulationConfig.bodies.map((b, i) => (
             <BodyLine
               key={b.name ?? i}
-              ref={(ref: Konva.Line | null) => (orbitRefMap.current[i] = ref)}
+              ref={(ref: Konva.Line | null) => {
+                orbitRefMap.current[i] = ref ?? null;
+              }}
               color={b.color}
               size={transformDiameterFunc(b.diameter) / 2}
             />

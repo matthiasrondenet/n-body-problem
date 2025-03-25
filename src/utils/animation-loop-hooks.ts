@@ -20,18 +20,20 @@ const useControllableLoop = ({
   throttling?: number;
 }) => {
   const startTime = useRef<number>(performance.now()); // time when loop first start
-  const previous = useRef<number>(); // keep track of previous loop call time
+  const previous = useRef<number | null>(null); // keep track of previous loop call time
   const counter = useRef<number>(0); // count of each loop call
 
-  const previousRunning = useRef<number>(); // keep track of previous loop call time, keeping only effectives run times
+  const previousRunning = useRef<number | null>(null); // keep track of previous loop call time, keeping only effectives run times
   const counterRunning = useRef<number>(0); // count of each loop call when callback is called (usefull if throttling enabled)
   const elapsedRunning = useRef<number>(0); // total elasped time, keeping only effectives run times
 
   const loop = (time: number) => {
     counter.current += 1;
 
-    const interval = time - (previous.current ?? time);
-    const intervalRunning = time - (previousRunning.current ?? time);
+    const last = previous.current ?? time;
+    const lastRunning = previousRunning.current ?? time;
+    const interval = time - last;
+    const intervalRunning = time - lastRunning;
 
     elapsedRunning.current += intervalRunning;
 
@@ -68,15 +70,15 @@ const useControllableLoop = ({
 
   const pause = useCallback(() => {
     loopStop();
-    previousRunning.current = undefined;
+    previousRunning.current = null;
   }, [loopStop]);
 
   const reset = useCallback(() => {
     loopStop();
     startTime.current = performance.now();
     counter.current = 0;
-    previous.current = undefined;
-    previousRunning.current = undefined;
+    previous.current = null;
+    previousRunning.current = null;
     elapsedRunning.current = 0;
     counterRunning.current = 0;
     loopStart();

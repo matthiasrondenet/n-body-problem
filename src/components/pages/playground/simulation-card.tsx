@@ -23,10 +23,10 @@ export const SimulationCard: React.FC<SimulationCardProps> = ({
   index,
   id,
 }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const { isFullScreen, toggleFullScreen } = useFullScreen(id);
 
-  useFullscreen(ref, isFullScreen, {
+  useFullscreen(ref as unknown as React.RefObject<Element>, isFullScreen, {
     onClose: toggleFullScreen,
   });
 

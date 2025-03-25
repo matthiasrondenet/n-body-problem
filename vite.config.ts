@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: "/n-body-problem/",
+export default defineConfig(({ mode }) => ({
+  base: process.env.BUILD_BASE ?? (mode === "production" ? "/n-body-problem/" : "/"),
   plugins: [react()],
   resolve: {
     alias: {
@@ -14,4 +14,4 @@ export default defineConfig({
   ssr: {
     noExternal: ["react-use", "konva", "react-konva", "better-react-mathjax"],
   },
-});
+}));

@@ -3,10 +3,15 @@ import { useMeasure } from "react-use";
 import { Loader } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
-import { Simulation, SimulationProps } from "./simulation";
+import type { SimulationProps } from "./simulation";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "../error-fallback";
 import { ClientOnly } from "vite-react-ssg";
+
+// Hoist lazy import so the component identity stays stable across renders
+const LazySimulation = React.lazy(() =>
+  import("./simulation").then((m) => ({ default: m.Simulation }))
+);
 
 type SimulationAutoResizedProps = Omit<SimulationProps, "width" | "height"> & {
   id?: string;
@@ -47,13 +52,21 @@ export const SimulationAutoResized: React.FC<SimulationAutoResizedProps> = ({
               </div>
             }
           >
-            {() => {
-              return width > 0 && height > 0 ? (
-                <Simulation width={width} height={height} {...props} />
+            {() =>
+              width > 0 && height > 0 ? (
+                <React.Suspense
+                  fallback={
+                    <div className="flex h-full flex-row items-center justify-center self-center">
+                      <Loader />
+                    </div>
+                  }
+                >
+                  <LazySimulation width={width} height={height} {...props} />
+                </React.Suspense>
               ) : (
                 <Loader />
-              );
-            }}
+              )
+            }
           </ClientOnly>
         </div>
       </AspectRatio>
