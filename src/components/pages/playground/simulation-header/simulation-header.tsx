@@ -13,11 +13,11 @@ export const SimulationHeader: React.FC<SimulationHeaderProps> = ({
 }) => {
   const { isPresetRoute } = usePresetRoute();
   return (
-    <div className="flex flex-row flex-wrap items-center justify-between justify-items-center gap-2 md:gap-3">
+    <div className="flex flex-row flex-wrap place-items-center justify-between gap-2 md:gap-3">
       {isPresetRoute ? (
         <ChangePresetSelector />
       ) : (
-        <span className="flex flex-row items-center justify-items-center gap-2">
+        <span className="flex flex-row place-items-center gap-2">
           <Title index={index} id={id} />
         </span>
       )}

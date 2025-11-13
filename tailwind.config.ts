@@ -2,6 +2,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 import defaultColors from "tailwindcss/colors";
 import type { Config } from "tailwindcss";
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,7 +93,7 @@ const tailwindcssConfig: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+  plugins: [tailwindcssAnimate, addVariablesForColors],
 };
 
 export default tailwindcssConfig;

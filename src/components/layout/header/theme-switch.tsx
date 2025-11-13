@@ -21,7 +21,7 @@ export const ThemeSwitch = () => {
         theme === "light" ? "Switch to dark themen" : "Switch to ligh theme"
       }
     >
-      <div className="flex flex-row items-center justify-items-center gap-2">
+      <div className="flex flex-row place-items-center gap-2">
         <Moon size={20} />
         <Switch
           checked={theme === "light"}

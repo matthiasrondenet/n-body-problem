@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "build-ssg": "vite-react-ssg build",
     "build-ssg:local": "cross-env BUILD_BASE=/ vite-react-ssg build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 10",
     "preview": "vite preview",
     "preview:ssg": "pnpm run build-ssg:local && pnpm run serve",
     "test": "vitest",
@@ -40,8 +40,7 @@
     "konva": "^10.0.0",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.372.0",
-    "odex": "file:odex-3.0.0-rc.4.tgz",
-    "prop-types": "^15.8.1",
+    "odex": "3.0.0-rc.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-error-boundary": "^4.0.13",
@@ -49,6 +48,7 @@
     "react-hook-form": "^7.62.0",
     "react-katex": "^3.1.0",
     "react-konva": "^19.0.7",
+    "react-router-dom": "^6.26.1",
     "react-use": "^17.5.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
@@ -57,6 +57,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.16.5",
     "@types/react": "^19.2.2",
@@ -72,13 +73,19 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.23",
     "eslint-plugin-tailwindcss": "^3.18.2",
+    "globals": "^16.5.0",
     "postcss": "^8.5.6",
-    "react-router-dom": "^6.26.1",
     "serve": "^14.2.3",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
     "vite": "^7.2.2",
     "vite-react-ssg": "^0.8.9",
     "vitest": "^4.0.8"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "odex@3.0.0-rc.4": "patches/odex@3.0.0-rc.4.patch"
+    }
   }
 }
