@@ -52,6 +52,7 @@ export const useStateVariablesCalculation = ({
   isPeriodic,
   timeSpeed,
   timeUnit,
+  nbOfHistoryPoints,
 }: {
   solver: Solver;
   ode: OdeEquation;
@@ -59,6 +60,7 @@ export const useStateVariablesCalculation = ({
   isPeriodic: boolean;
   timeSpeed: number;
   timeUnit: number;
+  nbOfHistoryPoints: number;
 }) => {
   const calculateBodyPositions = useCallback(
     (y0: number[], range: [number, number]) =>
@@ -91,15 +93,19 @@ export const useStateVariablesCalculation = ({
       );
 
       if (!isErr(nextResults)) {
+        const combined = [...allResults, ...nextResults.data];
         return createOk({
-          allResults: [...allResults, ...nextResults.data],
+          allResults:
+            combined.length > nbOfHistoryPoints
+              ? combined.slice(combined.length - nbOfHistoryPoints)
+              : combined,
           currentIndex: currentIndex + nextResults.data.length,
         });
       }
 
       return nextResults;
     },
-    [isPeriodic, stepSize, timeSpeed, calculateBodyPositions]
+    [isPeriodic, stepSize, timeSpeed, calculateBodyPositions, nbOfHistoryPoints]
   );
 
   /**
@@ -236,6 +242,7 @@ export const useSimulation = ({
       timeSpeed: simulationConfig.timeSpeed,
       isPeriodic: simulationConfig.isPeriodic,
       stepSize: simulationConfig.stepSize,
+      nbOfHistoryPoints: simulationConfig.graphicalConfig.nbOfHistoryPoints,
     });
 
   const y0 = simulationConfig.bodies.flatMap((x) => x.state);
@@ -349,17 +356,21 @@ export const useSimulationCalculation = ({
         return;
       }
 
-      const calculationResult = computeNextBodyStatesResult(
-        simulationStateRef.current
-      );
+      try {
+        const calculationResult = computeNextBodyStatesResult(
+          simulationStateRef.current
+        );
 
-      if (isErr(calculationResult)) {
+        if (isErr(calculationResult)) {
+          onStatusTypeChanged?.("Ended");
+          return;
+        }
+
+        simulationStateRef.current = calculationResult.data;
+        onSimulationLoopResultStateChanged(simulationStateRef.current, loopState);
+      } catch {
         onStatusTypeChanged?.("Ended");
-        return;
       }
-
-      simulationStateRef.current = calculationResult.data;
-      onSimulationLoopResultStateChanged(simulationStateRef.current, loopState);
     },
   });
 

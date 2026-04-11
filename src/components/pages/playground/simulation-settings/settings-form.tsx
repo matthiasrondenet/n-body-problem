@@ -37,7 +37,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ id }) => {
   const simulationConfig = useSimulationConfig(id);
   const { patchConfig } = useSimulationActions();
 
-  const { register, handleSubmit, formState: { errors }, reset, watch, control } = useForm<SimulationConfig>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<SimulationConfig>({
     defaultValues: simulationConfig,
     values: simulationConfig,
   });
@@ -55,14 +55,6 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ id }) => {
     reset(defaultsWithCurrentBodies);
     patchConfig(id, () => defaultsWithCurrentBodies);
   };
-
-  // Auto-save on change (debounced in practice)
-  React.useEffect(() => {
-    const subscription = watch(() => {
-      // Auto-save logic can be added here if needed
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
   return (
     <TooltipProvider>

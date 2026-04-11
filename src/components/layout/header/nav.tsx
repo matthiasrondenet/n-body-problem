@@ -1,4 +1,4 @@
-import { NavLink } from "vite-react-ssg";
+import { NavLink } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
