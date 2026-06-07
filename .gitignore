@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .vite-react-ssg-temp
+
+# Claude Code & GSD planning (local-only tooling artifacts)
+.claude/
+.planning/
