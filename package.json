@@ -81,10 +81,5 @@
     "vite": "^7.2.2",
     "vite-react-ssg": "^0.9.0",
     "vitest": "^4.1.4"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "odex@3.0.0-rc.4": "patches/odex@3.0.0-rc.4.patch"
-    }
   }
 }
