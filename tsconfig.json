@@ -6,9 +6,9 @@
     "module": "ESNext",
     "types": [],
 
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "odex": ["./src/types/odex.d.ts"]
     },
 
     /* Bundler mode */
