@@ -12,7 +12,7 @@ import { SimulationFooter } from "./simulation-footer/simulation-footer";
 import { SimulationSettings } from "./simulation-settings/simulation-settings";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "@/components/error-fallback";
-import useFullscreen from "react-use/lib/useFullscreen";
+import { useFullscreen } from "react-use";
 import { useFullScreen } from "./hooks/fullscreen-state-hooks";
 
 export type SimulationCardProps = {
