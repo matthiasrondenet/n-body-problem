@@ -94,11 +94,16 @@ export const useStateVariablesCalculation = ({
 
       if (!isErr(nextResults)) {
         const combined = [...allResults, ...nextResults.data];
+        if (combined.length > nbOfHistoryPoints) {
+          // keep only the history window; currentIndex must keep pointing at the latest result
+          const trimmed = combined.slice(combined.length - nbOfHistoryPoints);
+          return createOk({
+            allResults: trimmed,
+            currentIndex: trimmed.length - 1,
+          });
+        }
         return createOk({
-          allResults:
-            combined.length > nbOfHistoryPoints
-              ? combined.slice(combined.length - nbOfHistoryPoints)
-              : combined,
+          allResults: combined,
           currentIndex: currentIndex + nextResults.data.length,
         });
       }
