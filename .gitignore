@@ -28,3 +28,5 @@ dist-ssr
 # Claude Code & GSD planning (local-only tooling artifacts)
 .claude/
 .planning/
+# Vitest 5 artifacts
+.vitest/
