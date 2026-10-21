@@ -3,7 +3,7 @@ import React from "react";
 import { Arrow, Circle, Group, Text } from "react-konva";
 import { Tooltip } from "./common";
 import defaultColors from "tailwindcss/colors";
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { DefaultColors } from "@/utils/colors";
 import { useTheme } from "../layout/header/theme-provider";
 import { getColorOrDefault } from "./helpers";
 

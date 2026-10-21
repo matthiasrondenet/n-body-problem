@@ -1,4 +1,4 @@
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { DefaultColors } from "@/utils/colors";
 import { Coordinate } from "../physics/coordinate";
 import { SolverName } from "../solvers/solvers";
 import { RangeScalingFunctionName } from "@/utils/number";

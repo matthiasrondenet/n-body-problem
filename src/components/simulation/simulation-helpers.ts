@@ -9,7 +9,7 @@ import { SimulationType } from "./simulation-types";
 import { sunDensity } from "@/services/physics/constants";
 import { SimulationConfig } from "@/services/simulation/simulation-config-types";
 import { solverMethods } from "@/services/solvers/solvers";
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { DefaultColors } from "@/utils/colors";
 
 const defaultMass = 1;
 const bodyColors: (keyof DefaultColors)[] = [

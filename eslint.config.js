@@ -14,6 +14,9 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    settings: {
+      tailwindcss: { cssConfigPath: "./src/index.css" },
+    },
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
@@ -25,7 +28,8 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
-      ...tailwindcss.configs.recommended.rules,
+      ...(tailwindcss.configs["flat/recommended"] ?? tailwindcss.configs.recommended).rules,
+      "tailwindcss/no-custom-classname": ["warn", { whitelist: ["active", "origin-top-center"] }],
       // Relax some strict rules
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-unused-expressions": "off",
@@ -33,5 +37,10 @@ export default tseslint.config(
       "react-hooks/purity": "warn",
       "react-hooks/immutability": "warn",
     },
+  },
+  {
+    // false positive: `cn(...inputs)` spreads a ClassValue[] param
+    files: ["src/lib/utils.ts"],
+    rules: { "tailwindcss/no-custom-classname": "off" },
   }
 );

@@ -1,7 +1,7 @@
 import Konva from "konva";
 import { chunk, round } from "lodash-es";
 import defaultColors from "tailwindcss/colors";
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { DefaultColors } from "@/utils/colors";
 import { SimulationType } from "../simulation/simulation-types";
 import { SimulationResultState } from "../simulation/simulation-hooks";
 import { previousNth } from "@/utils/array";

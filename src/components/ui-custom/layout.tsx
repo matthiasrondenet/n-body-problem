@@ -7,7 +7,7 @@ const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("relative flex h-full w-full flex-col", className)}
+      className={cn("relative flex size-full flex-col", className)}
       {...props}
     />
   )
@@ -21,7 +21,7 @@ const LayoutHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex h-[var(--header-height)] flex-none items-center gap-4 bg-background p-2 md:px-4",
+      "flex h-(--header-height) flex-none items-center gap-4 bg-background p-2 md:px-4",
       className
     )}
     {...props}

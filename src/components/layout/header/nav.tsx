@@ -20,7 +20,7 @@ export const Nav: React.FC = () => {
             className={({ isActive }) =>
               cn(
                 navigationMenuTriggerStyle(),
-                isActive && "active dark:bg-slate-900 text-teal-600"
+                isActive && "active text-teal-600 dark:bg-slate-900"
               )
             }
           >
@@ -33,7 +33,7 @@ export const Nav: React.FC = () => {
             className={({ isActive }) =>
               cn(
                 navigationMenuTriggerStyle(),
-                isActive && "active dark:bg-slate-900 text-teal-600"
+                isActive && "active text-teal-600 dark:bg-slate-900"
               )
             }
           >
@@ -47,7 +47,7 @@ export const Nav: React.FC = () => {
               className={({ isActive }) =>
                 cn(
                   navigationMenuTriggerStyle(),
-                  isActive && "active dark:bg-slate-900 text-teal-600"
+                  isActive && "active text-teal-600 dark:bg-slate-900"
                 )
               }
             >

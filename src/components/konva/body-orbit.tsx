@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-konva";
 import Konva from "konva";
-import { DefaultColors } from "tailwindcss/types/generated/colors";
+import { DefaultColors } from "@/utils/colors";
 import { getColorOrDefault } from "./helpers";
 
 export const BodyLine = React.forwardRef(
