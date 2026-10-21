@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  ssgOptions: {
+    // emit <route>/index.html so GitHub Pages can serve "/presets/"
+    dirStyle: "nested",
+  },
   ssr: {
     noExternal: ["react-use", "konva", "react-konva", "better-react-mathjax"],
   },

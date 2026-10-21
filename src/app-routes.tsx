@@ -34,7 +34,7 @@ export const routes: RouteRecord[] = [
         },
         entry: "src/components/pages/playground/playground.tsx",
         getStaticPaths: () => {
-          return Object.values(presetKeys).map((key) => `presets/${key}`);
+          return ["presets", ...Object.values(presetKeys).map((key) => `presets/${key}`)];
         },
       },
       {
